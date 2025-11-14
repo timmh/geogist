@@ -1,0 +1,142 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geogist"
+version = "0.1.0"
+description = "A unified interface for extracting geospatial foundation model representations from satellite imagery"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Timm Haucke", email = "haucke@mit.edu"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research", 
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+keywords = ["geogist", "satellite", "imagery", "embeddings", "geospatial", "foundation-models", "machine-learning", "remote-sensing"]
+requires-python = ">=3.8"
+dependencies = [
+    "torch>=1.12.0",
+    "torchvision>=0.13.0", 
+    "numpy>=1.21.0",
+    "Pillow>=10.0.0",
+    "rasterio>=1.3.0",
+    "planetary-computer>=1.0.0",
+    "pystac-client>=0.7.0",
+    "shapely>=2.0.0",
+    "retrying>=1.3.3",
+    "earthengine-api>=0.1.320",
+    "pytorch-lightning>=2.0.0",
+    "pandas>=1.3.0",
+    "timm>=0.6.0",
+    "scikit-image>=0.19.0",
+    "requests>=2.28.0",
+    "einops>=0.4.0",
+    "soilgrids>=0.1.4",
+    "open-clip-torch>=2.24.0",
+    "huggingface-hub>=0.23.0",
+    "hydra-core>=1.1.0",
+    "geotessera>=0.7.0",
+    "geopandas>=0.10.0",
+    "omegaconf>=2.3.0",
+    "terratorch>=1.0.2",
+    "tqdm>=4.62.0",
+    "python-dateutil>=2.8.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "isort>=5.10.0", 
+    "flake8>=5.0.0",
+    "mypy>=1.0.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/example/geogist"
+"Bug Reports" = "https://github.com/example/geogist/issues"
+"Source" = "https://github.com/example/geogist"
+
+[project.scripts]
+geogist = "geogist.cli:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+exclude = ["tests*", "cache*", "weights*"]
+
+[tool.setuptools.package-data]
+geogist = [
+    "band_statistics.json",
+]
+
+[tool.black]
+line-length = 100
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 100
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+exclude = [
+    "tests/",
+    "cache/",
+    "weights/",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--verbose --cov=geogist --cov-report=term-missing"
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
